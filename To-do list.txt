@@ -1,0 +1,47 @@
+pragma solidity ^0.6.0;
+
+contract TodoList{
+    
+    uint public idcount=0;
+    
+    struct Objects{
+        uint id;
+        string mytask; 
+        bool check;
+    }
+    
+
+    mapping(uint => Objects) tasks;
+    
+    event TaskCreated(
+    uint id,
+    string content,
+    bool check
+    );
+    
+    event TaskCompleted(
+    uint id,
+    bool check
+    );
+    
+    constructor() public {
+    createTasks("My Task");
+
+    }
+  
+    function createTasks(string memory _mytask) public{
+        idcount++;
+        tasks[idcount] = Objects(idcount, _mytask, false);
+        emit TaskCreated(idcount, _mytask, false);
+    }
+    
+    function checkoffTasks(uint _id) public{
+        Objects memory currenttask = tasks[_id];
+        currenttask.check = !currenttask.check;
+        tasks[_id] = currenttask;
+        emit TaskCompleted(_id, currenttask.check);
+        
+    } 
+    
+}
+
