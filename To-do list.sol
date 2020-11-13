@@ -1,32 +1,6 @@
 pragma solidity ^0.6.0;
 
-contract Ownable {
-    address payable private _owner;
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
-    constructor () internal {
-        _owner = msg.sender;
-        emit OwnershipTransferred(address(0), _owner);
-    }
-
-    function owner() public view returns (address payable) {
-        return _owner;
-    }
-
-    modifier onlyOwner() {
-        require(_owner == msg.sender, "Ownable: caller is not the owner");
-        _;
-    }
-
-   
-    function renounceOwnership() public virtual onlyOwner {
-        emit OwnershipTransferred(_owner, address(0));
-        _owner = address(0);
-    }
- 
-}
-
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
 
 contract TodoList is Ownable{
     
@@ -66,4 +40,3 @@ contract TodoList is Ownable{
     } 
     
 }
-
